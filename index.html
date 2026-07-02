@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Jiggaman Bonding | 24/7 Bail Bonds in Hampton Roads</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Jiggaman Bonding provides fast 24/7 bail bond services in Suffolk, Portsmouth, Norfolk, Chesapeake, Virginia Beach, Hampton, and Newport News. Call 757-698-0355.">
+<style>
+body{margin:0;font-family:Arial;background:#071018;color:white}
+header{padding:35px 20px;text-align:center;background:linear-gradient(135deg,#071018,#0f3443)}
+.logo{max-width:420px;width:100%;border-radius:14px}
+.btn{display:inline-block;background:#25c7e8;color:#001018;padding:14px 22px;margin:8px;border-radius:8px;text-decoration:none;font-weight:bold}
+.gold{background:#d4af37;color:#000}
+.card{background:#111c24;margin:20px auto;padding:24px;border-radius:14px;max-width:950px;box-shadow:0 0 20px #0006}
+input,textarea,select{width:100%;padding:14px;margin:8px 0;border-radius:8px;border:0;box-sizing:border-box}
+button{background:#25c7e8;border:0;padding:14px 22px;border-radius:8px;font-weight:bold;cursor:pointer}
+h1,h2{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.small{color:#bbb;font-size:14px}
+.sticky{position:fixed;bottom:0;left:0;right:0;background:#071018;padding:10px;text-align:center;z-index:999;border-top:2px solid #25c7e8}
+.sticky a{margin:4px}
+a{color:#25c7e8}
+</style>
+</head>
+<body>
+
+<header>
+<img src="logo.jpg" class="logo" alt="Jiggaman Bonding Logo">
+<h1>Jiggaman Bonding</h1>
+<p>Fast, confidential 24/7 bail bonds in Suffolk & Hampton Roads</p>
+<a class="btn gold" href="tel:7576980355">Call Now: 757-698-0355</a>
+<a class="btn" href="mailto:jiggamanbonding@gmail.com">Email Us</a>
+</header>
+
+<div class="card">
+<h2>Need a Bond Fast?</h2>
+<p>Jiggaman Bonding helps families with emergency bail bonds, misdemeanor bonds, felony bonds, traffic bonds, warrant assistance, and jail release information across Hampton Roads.</p>
+<div class="grid">
+<p>? 24/7 Bail Bonds</p>
+<p>? Fast Response</p>
+<p>? Affordable Payment Options</p>
+<p>? Confidential Help</p>
+</div>
+</div>
+
+<div class="card">
+<h2>Search Hampton Roads Jail Sources</h2>
+<p>Type the person’s name, then choose the jail/source to check.</p>
+<input id="searchName" placeholder="Enter first and last name">
+<button onclick="searchJails()">Search Jail Sources</button>
+<div id="jailResults"></div>
+<p class="small">This tool opens official/public inmate lookup sources. Always verify directly with the jail.</p>
+</div>
+
+<div class="card">
+<h2>AI Bail Intake Assistant</h2>
+<p>Answer a few quick questions before calling so John knows how to help faster.</p>
+<input id="defendant" placeholder="Person locked up">
+<input id="jail" placeholder="What jail or city?">
+<input id="charge" placeholder="Charge, if known">
+<input id="caller" placeholder="Your name">
+<input id="phone" placeholder="Your phone number">
+<textarea id="notes" placeholder="Anything else John should know?"></textarea>
+<button onclick="buildText()">Create Text Message</button>
+<div id="textOutput"></div>
+</div>
+
+<div class="card">
+<h2>Request Bail Help</h2>
+<form action="mailto:jiggamanbonding@gmail.com" method="POST" enctype="text/plain">
+<input name="Name" placeholder="Your Name" required>
+<input name="Phone" placeholder="Your Phone Number" required>
+<input name="Person Locked Up" placeholder="Person Locked Up">
+<input name="Jail or City" placeholder="Jail / City">
+<textarea name="Message" placeholder="What happened?"></textarea>
+<button type="submit">Send Request</button>
+</form>
+</div>
+
+<div class="card">
+<h2>Areas Served</h2>
+<div class="grid">
+<p>Suffolk Bail Bonds</p>
+<p>Portsmouth Bail Bonds</p>
+<p>Norfolk Bail Bonds</p>
+<p>Chesapeake Bail Bonds</p>
+<p>Virginia Beach Bail Bonds</p>
+<p>Hampton Bail Bonds</p>
+<p>Newport News Bail Bonds</p>
+<p>Franklin / Isle of Wight</p>
+</div>
+</div>
+
+<div class="card">
+<h2>FAQ</h2>
+<p><b>How fast can someone get released?</b><br>Release times depend on the jail, charges, bond amount, and processing time.</p>
+<p><b>Do you answer 24/7?</b><br>Yes, call 757-698-0355 anytime for bail bond assistance.</p>
+<p><b>What information do I need?</b><br>Name, jail location, date of birth if known, charge, and bond amount if available.</p>
+<p><b>Do you offer payment options?</b><br>Call John directly to discuss available options.</p>
+</div>
+
+<div class="card">
+<h2>Google Reviews</h2>
+<p>Worked with Jiggaman Bonding? Leave a review and help another family find fast help.</p>
+<a class="btn gold" href="#">Leave a Review</a>
+</div>
+
+<script>
+function searchJails(){
+let n=document.getElementById('searchName').value.trim();
+if(!n){alert('Enter a name first');return;}
+let sources=[
+['Western Tidewater Regional Jail','https://wtrj.org/inmate-lookup/'],
+['Virginia DOC Locator','https://vadoc.virginia.gov/general-public/inmate-and-supervisee-locator/'],
+['VINE Virginia','https://vinelink.vineapps.com/state/VA'],
+['Virginia Peninsula Regional Jail','https://www.vprj.net/'],
+['Norfolk Sheriff','https://www.norfolk-sheriff.com/'],
+['Chesapeake Sheriff','https://chesapeakesheriff.com/'],
+['Portsmouth Sheriff','https://www.portsmouthva.gov/331/Sheriffs-Office']
+];
+document.getElementById('jailResults').innerHTML=sources.map(s=>`<p><a class="btn" target="_blank" href="${s[1]}">${s[0]}</a></p>`).join('');
+}
+
+function buildText(){
+let msg=`Need bail help.%0A%0APerson locked up: ${defendant.value}%0AJail/City: ${jail.value}%0ACharge: ${charge.value}%0ACaller: ${caller.value}%0APhone: ${phone.value}%0ANotes: ${notes.value}`;
+document.getElementById('textOutput').innerHTML=`<p><b>Text John now:</b></p><a class="btn gold" href="sms:7576980355?body=${msg}">Send Text to John</a>`;
+}
+</script>
+
+<div class="sticky">
+<a class="btn gold" href="tel:7576980355">Call 757-698-0355</a>
+<a class="btn" href="sms:7576980355">Text John</a>
+</div>
+
+</body>
+</html>
