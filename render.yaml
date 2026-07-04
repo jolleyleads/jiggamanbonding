@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: jiggamanbonding
-    env: static
-    buildCommand: ""
-    staticPublishPath: .
+    name: doe-platform-v2
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app

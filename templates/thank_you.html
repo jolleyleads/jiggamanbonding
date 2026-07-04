@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+<h1>Thank you.</h1>
+<p>Your request was received by {{ client.business_name }}.</p>
+<a class="btn primary" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call Now</a>
+<a class="btn" href="/">Back Home</a>
+</section>
+{% endblock %}

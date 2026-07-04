@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="hero small">
+<h1>Lead CRM Pipeline</h1>
+<p>Move leads from New to Closed Bond.</p>
+</header>
+
+<section class="grid">
+{% for stage in pipeline %}
+<div class="metric"><h3>{{ stage }}</h3>
+{% set count = namespace(v=0) %}
+{% for l in leads %}
+{% if l[9] == stage %}
+{% set count.v = count.v + 1 %}
+{% endif %}
+{% endfor %}
+<p>{{ count.v }}</p>
+</div>
+{% endfor %}
+</section>
+
+<section class="card">
+<h2>Lead Pipeline Table</h2>
+<table>
+<tr><th>Name</th><th>Phone</th><th>Source</th><th>City</th><th>Jail</th><th>Bond Amount</th><th>Status</th><th>Notes</th></tr>
+{% for l in leads %}
+<tr>
+<td>{{ l[1] }}</td><td>{{ l[2] }}</td><td>{{ l[4] }}</td><td>{{ l[6] }}</td><td>{{ l[7] }}</td><td>${{ l[8] }}</td><td>{{ l[9] }}</td><td>{{ l[12] }}</td>
+</tr>
+{% endfor %}
+</table>
+</section>
+{% endblock %}

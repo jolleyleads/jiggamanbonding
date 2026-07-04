@@ -1,0 +1,17 @@
+{
+  "business_name": "",
+  "industry": "",
+  "phone": "",
+  "email": "",
+  "website": "",
+  "gtm_id": "",
+  "ga4_id": "",
+  "city_targets": [],
+  "primary_conversions": [
+    "phone_call_click",
+    "text_message_click",
+    "email_click",
+    "form_submit",
+    "ai_intake_submit"
+  ]
+}

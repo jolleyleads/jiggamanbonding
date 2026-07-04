@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="hero">
+<h1>{{ client.business_name }}</h1>
+<p>Fast bail bond help in Hampton Roads.</p>
+
+<div class="actions">
+<a class="btn primary" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call {{ client.phone }}</a>
+<a class="btn" href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
+<a class="btn" href="mailto:{{ client.email }}" onclick="trackDOE('email_click')">Email</a>
+<a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Jiggaman+Bonding" onclick="trackDOE('maps_click')">Google Maps</a>
+</div>
+</header>
+
+<section class="card">
+<h2>Bail Help Form</h2>
+<form action="/lead" method="POST" onsubmit="trackDOE('bail_form_submit')">
+<input name="lead_name" placeholder="Lead Name" required>
+<input name="phone" placeholder="Phone Number" required>
+<input name="city" placeholder="City">
+<input name="jail" placeholder="Jail">
+<input name="bond_amount" placeholder="Bond Amount">
+<input name="lead_source" value="Website Bail Form" hidden>
+<textarea name="notes" placeholder="Notes"></textarea>
+<button type="submit">Submit Bail Request</button>
+</form>
+</section>
+
+<section class="card">
+<h2>AI Intake</h2>
+<form action="/lead" method="POST" onsubmit="trackDOE('ai_intake_submit')">
+<input name="lead_name" placeholder="Name" required>
+<input name="phone" placeholder="Phone Number" required>
+<input name="city" placeholder="City">
+<input name="lead_source" value="AI Intake" hidden>
+<button type="submit">Start AI Intake</button>
+</form>
+</section>
+
+<section class="card">
+<h2>Local SEO Actions</h2>
+<a class="link-btn" href="#" onclick="trackDOE('jail_search_click')">Jail Search</a>
+<a class="link-btn" href="#" onclick="trackDOE('review_click')">Review Click</a>
+<a class="link-btn" href="#" onclick="trackDOE('live_chat_click')">Live Chat</a>
+</section>
+{% endblock %}
