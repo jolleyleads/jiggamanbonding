@@ -1,0 +1,235 @@
+﻿{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-07-03 00:00:00",
+  "containerVersion": {
+    "name": "Jiggaman Bonding DOE Tracking Framework",
+    "tag": [
+      {
+        "name": "GA4 - Base Google Tag",
+        "type": "googtag",
+        "parameter": [
+          {
+            "type": "template",
+            "key": "tagId",
+            "value": "G-XXXXXXXXXX"
+          }
+        ],
+        "firingTriggerId": ["2147479553"]
+      },
+      {
+        "name": "GA4 Event - phone_call_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "phone_call_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["101"]
+      },
+      {
+        "name": "GA4 Event - text_message_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "text_message_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["102"]
+      },
+      {
+        "name": "GA4 Event - email_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "email_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["103"]
+      },
+      {
+        "name": "GA4 Event - maps_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "maps_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["104"]
+      },
+      {
+        "name": "GA4 Event - jail_search_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "jail_search_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["105"]
+      },
+      {
+        "name": "GA4 Event - review_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "review_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["106"]
+      },
+      {
+        "name": "GA4 Event - live_chat_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "live_chat_click" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["107"]
+      },
+      {
+        "name": "GA4 Event - bail_form_submit",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "bail_form_submit" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["108"]
+      },
+      {
+        "name": "GA4 Event - ai_intake_submit",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "template", "key": "eventName", "value": "ai_intake_submit" },
+          { "type": "template", "key": "measurementIdOverride", "value": "G-XXXXXXXXXX" }
+        ],
+        "firingTriggerId": ["109"]
+      }
+    ],
+    "trigger": [
+      {
+        "triggerId": "101",
+        "name": "Click - Phone Call",
+        "type": "LINK_CLICK",
+        "filter": [
+          {
+            "type": "STARTS_WITH",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "template", "key": "arg1", "value": "tel:" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "102",
+        "name": "Click - Text Message",
+        "type": "LINK_CLICK",
+        "filter": [
+          {
+            "type": "STARTS_WITH",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "template", "key": "arg1", "value": "sms:" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "103",
+        "name": "Click - Email",
+        "type": "LINK_CLICK",
+        "filter": [
+          {
+            "type": "STARTS_WITH",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "template", "key": "arg1", "value": "mailto:" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "104",
+        "name": "Click - Google Maps",
+        "type": "LINK_CLICK",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "template", "key": "arg1", "value": "google.com/maps" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "105",
+        "name": "Click - Jail Search",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click Text}}" },
+              { "type": "template", "key": "arg1", "value": "Jail Search" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "106",
+        "name": "Click - Review",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click Text}}" },
+              { "type": "template", "key": "arg1", "value": "Review" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "107",
+        "name": "Click - Live Chat",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Click Text}}" },
+              { "type": "template", "key": "arg1", "value": "Live Chat" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "108",
+        "name": "Form - Bail Form Submit",
+        "type": "FORM_SUBMISSION",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Form ID}}" },
+              { "type": "template", "key": "arg1", "value": "bail" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "109",
+        "name": "Form - AI Intake Submit",
+        "type": "FORM_SUBMISSION",
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              { "type": "template", "key": "arg0", "value": "{{Form ID}}" },
+              { "type": "template", "key": "arg1", "value": "ai" }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      { "name": "Click URL", "type": "v", "parameter": [{ "type": "integer", "key": "varType", "value": "16" }] },
+      { "name": "Click Text", "type": "v", "parameter": [{ "type": "integer", "key": "varType", "value": "18" }] },
+      { "name": "Form ID", "type": "v", "parameter": [{ "type": "integer", "key": "varType", "value": "20" }] }
+    ]
+  }
+}
