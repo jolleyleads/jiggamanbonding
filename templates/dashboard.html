@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <header class="hero small">
-<h1>DOE Dashboard</h1>
-<p>{{ client.business_name }} lead tracking and performance command center.</p>
+<h1>Agency Dashboard</h1>
+<p>{{ client.business_name }} performance command center.</p>
 </header>
 
 <section class="grid">
@@ -15,9 +15,10 @@
 ("Emails", metrics.emails),
 ("Forms", metrics.forms),
 ("AI Intake", metrics.ai_intake),
-("Jail Searches", metrics.jail_searches),
 ("Maps Clicks", metrics.maps_clicks),
 ("Reviews", metrics.reviews),
+("Jail Searches", metrics.jail_searches),
+("Live Chat", metrics.live_chat),
 ("Revenue", "$" ~ metrics.revenue),
 ("Closed Bonds", metrics.closed_bonds),
 ("Conversion Rate", metrics.conversion_rate ~ "%"),
@@ -30,29 +31,17 @@
 </section>
 
 <section class="card">
-<h2>Conversions Chart</h2>
-<canvas id="conversionChart"></canvas>
-</section>
-
-<section class="card">
-<h2>Leads</h2>
-<table>
-<tr><th>Name</th><th>Phone</th><th>Date</th><th>Source</th><th>City</th><th>Status</th><th>Closed</th><th>Revenue</th></tr>
-{% for l in leads %}
-<tr>
-<td>{{ l[1] }}</td><td>{{ l[2] }}</td><td>{{ l[3] }}</td><td>{{ l[4] }}</td><td>{{ l[6] }}</td><td>{{ l[9] }}</td><td>{{ l[10] }}</td><td>${{ l[11] }}</td>
-</tr>
-{% endfor %}
-</table>
+<h2>Tracked Actions</h2>
+<canvas id="chart"></canvas>
 </section>
 
 <script>
-new Chart(document.getElementById('conversionChart'), {
+new Chart(document.getElementById('chart'), {
 type: 'bar',
 data: {
-labels: ['Calls','Texts','Emails','Forms','AI Intake','Maps','Reviews','Jail'],
+labels: ['Calls','Texts','Emails','Forms','AI','Maps','Reviews','Jail','Chat'],
 datasets: [{
-label: 'Tracked Actions',
+label: 'Actions',
 data: [
 {{ metrics.phone_calls }},
 {{ metrics.texts }},
@@ -61,7 +50,8 @@ data: [
 {{ metrics.ai_intake }},
 {{ metrics.maps_clicks }},
 {{ metrics.reviews }},
-{{ metrics.jail_searches }}
+{{ metrics.jail_searches }},
+{{ metrics.live_chat }}
 ]
 }]
 }

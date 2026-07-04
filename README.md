@@ -1,27 +1,31 @@
-# DOE Framework Platform v2.0
+# DOE Platform v3
 
-Agency-grade local lead tracking platform for Jiggaman Bonding and future service-business clients.
+Professional agency-ready DOE Framework platform for local service businesses.
 
-## Includes
-- Multi-client-ready Flask structure
-- Jiggaman Bonding default client
-- Login-ready admin dashboard structure
-- Lead CRM pipeline
-- SQLite database
-- Event tracking endpoints
-- GTM/GA4 event framework
-- AI recommendation module placeholder
-- Monthly PDF report generator
-- Client onboarding config
+Default client: Jiggaman Bonding.
+
+## v3 Adds
+- Secure login
+- Multi-client-ready config
+- Agency dashboard
+- Client dashboard
+- CRM pipeline
+- Lead detail fields
+- Event tracking
+- AI command center
+- Report center
+- Monthly PDF report
 - Render deployment files
+- GTM/GA4 tracking documentation
 
-## Default Client
-Business: Jiggaman Bonding  
-Phone: 757-698-0355  
-Email: jiggamanbonding@gmail.com  
-Website: https://jiggamanbonding-1.onrender.com  
-GTM: GTM-T6KTLFGG  
-GA4: G-RXL701PE9T  
+## Default Login
+Username:
+admin
+
+Password:
+change-me-now
+
+Change this in `config.py` before selling to a client.
 
 ## Run locally
 ```bash
@@ -29,21 +33,22 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open:
-```text
-http://127.0.0.1:10000
-http://127.0.0.1:10000/dashboard
-http://127.0.0.1:10000/crm
-http://127.0.0.1:10000/ai
-```
-
 ## Render
-Build command:
+Build:
 ```text
 pip install -r requirements.txt
 ```
 
-Start command:
+Start:
 ```text
 gunicorn app:app
 ```
+
+## Main Pages
+- /
+- /login
+- /dashboard
+- /crm
+- /reports
+- /ai
+- /clients

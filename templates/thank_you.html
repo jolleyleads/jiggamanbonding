@@ -1,9 +1,12 @@
-{% extends "base.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head><title>Thank You</title><link rel="stylesheet" href="/static/css/style.css"></head>
+<body>
 <section class="card">
 <h1>Thank you.</h1>
-<p>Your request was received by {{ client.business_name }}.</p>
-<a class="btn primary" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call Now</a>
+<p>{{ client.business_name }} received your request.</p>
+<a class="btn primary" href="tel:{{ client.phone_raw }}">Call Now</a>
 <a class="btn" href="/">Back Home</a>
 </section>
-{% endblock %}
+</body>
+</html>

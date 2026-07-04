@@ -2,27 +2,19 @@
 {% block content %}
 <header class="hero small">
 <h1>AI Command Center</h1>
-<p>Daily recommendations, content, and local SEO actions.</p>
+<p>Daily content, SEO, lead analysis, and recommendations.</p>
 </header>
 
 <section class="card">
-<h2>Today’s AI Recommendations</h2>
-<ul>
-{% for r in recommendations %}
-<li>{{ r }}</li>
-{% endfor %}
-</ul>
+<h2>Recommendations</h2>
+<ul>{% for r in recommendations %}<li>{{ r }}</li>{% endfor %}</ul>
 </section>
 
-<section class="card">
-<h2>Generated Content</h2>
-<h3>Google Business Profile Post</h3>
-<p>{{ posts.gbp_post }}</p>
-<h3>Facebook Post</h3>
-<p>{{ posts.facebook_post }}</p>
-<h3>FAQ</h3>
-<p>{{ posts.faq }}</p>
-<h3>Blog Topic</h3>
-<p>{{ posts.blog_topic }}</p>
+<section class="grid">
+<div class="card"><h3>Google Business Profile Post</h3><p>{{ posts.gbp }}</p></div>
+<div class="card"><h3>Facebook Post</h3><p>{{ posts.facebook }}</p></div>
+<div class="card"><h3>FAQ</h3><p>{{ posts.faq }}</p></div>
+<div class="card"><h3>Blog Topic</h3><p>{{ posts.blog }}</p></div>
+<div class="card"><h3>Review Response</h3><p>{{ posts.review_response }}</p></div>
 </section>
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="hero small">
+<h1>Clients</h1>
+<p>Multi-client agency control center.</p>
+</header>
+<section class="card">
+{% for key, c in clients.items() %}
+<p><strong>{{ c.business_name }}</strong> - {{ c.industry }} - <a href="/switch-client/{{ key }}">Open</a></p>
+{% endfor %}
+</section>
+{% endblock %}
