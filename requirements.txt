@@ -2,3 +2,5 @@ Flask
 gunicorn
 reportlab
 Werkzeug
+google-analytics-data
+google-auth

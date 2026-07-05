@@ -1,7 +1,10 @@
-SECRET_KEY = "change-this-secret-key"
+import os
 
-ADMIN_USER = "admin"
-ADMIN_PASSWORD = "change-me-now"
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-this")
+ADMIN_USER = os.getenv("ADMIN_USER", "admin")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "change-me-now")
+
+GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID", "")
 
 CLIENTS = {
     "jiggaman": {
@@ -11,9 +14,11 @@ CLIENTS = {
         "phone": "757-698-0355",
         "phone_raw": "7576980355",
         "email": "jiggamanbonding@gmail.com",
-        "website": "https://jiggamanbonding-1.onrender.com",
+        "public_website": "https://jiggamanbonding-1.onrender.com",
+        "dashboard_url": "https://jiggamanbonding-dashboard.onrender.com",
         "gtm_id": "GTM-T6KTLFGG",
-        "ga4_id": "G-RXL701PE9T",
+        "ga4_measurement_id": "G-RXL701PE9T",
+        "ga4_property_id": GA4_PROPERTY_ID,
         "cities": ["Portsmouth", "Suffolk", "Norfolk", "Chesapeake", "Newport News", "Hampton"],
         "primary_conversions": [
             "phone_call_click",

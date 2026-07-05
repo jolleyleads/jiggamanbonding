@@ -7,14 +7,14 @@
 
 <section class="card">
 <h2>Monthly PDF Report</h2>
-<p>Includes calls, texts, emails, forms, revenue, conversion rate, maps clicks, reviews, and recommendations.</p>
+<p>Includes users, sessions, calls, texts, emails, forms, revenue, conversion rate, maps clicks, reviews, and recommendations.</p>
 <a class="btn primary" href="/monthly-report">Download Monthly Report</a>
 </section>
 
 <section class="grid">
+<div class="metric"><h3>Users</h3><p>{{ metrics.users }}</p></div>
+<div class="metric"><h3>Sessions</h3><p>{{ metrics.sessions }}</p></div>
 <div class="metric"><h3>Calls</h3><p>{{ metrics.phone_calls }}</p></div>
-<div class="metric"><h3>Texts</h3><p>{{ metrics.texts }}</p></div>
-<div class="metric"><h3>Forms</h3><p>{{ metrics.forms }}</p></div>
 <div class="metric"><h3>Revenue</h3><p>${{ metrics.revenue }}</p></div>
 </section>
 {% endblock %}

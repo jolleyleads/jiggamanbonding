@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: doe-platform-v3
+    name: doe-platform-v4
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app

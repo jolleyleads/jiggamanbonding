@@ -1,28 +1,29 @@
 from flask import Flask, render_template, request, redirect, jsonify, send_file, session, url_for
 from functools import wraps
-import sqlite3, datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3, datetime, os
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from config import SECRET_KEY, ADMIN_USER, ADMIN_PASSWORD, CLIENTS
+from services.ga4_service import get_ga4_summary
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
-DB = "doe_platform_v3.db"
+DB = "doe_platform_v4.db"
 DEFAULT_CLIENT_ID = "jiggaman"
 
-PIPELINE = [
-    "New",
-    "Attempted Contact",
-    "Qualified",
-    "Bond Written",
-    "Closed",
-    "Lost"
-]
+PIPELINE = ["New", "Attempted Contact", "Qualified", "Bond Written", "Closed", "Lost"]
 
 def current_client():
     client_id = session.get("client_id", DEFAULT_CLIENT_ID)
     return CLIENTS.get(client_id, CLIENTS[DEFAULT_CLIENT_ID])
+
+def password_ok(raw_password):
+    stored = ADMIN_PASSWORD
+    if stored.startswith("pbkdf2:") or stored.startswith("scrypt:"):
+        return check_password_hash(stored, raw_password)
+    return raw_password == stored
 
 def login_required(f):
     @wraps(f)
@@ -72,16 +73,6 @@ def init_db():
     )
     """)
 
-    c.execute("""
-    CREATE TABLE IF NOT EXISTS ai_outputs (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        client_id TEXT,
-        output_type TEXT,
-        content TEXT,
-        date TEXT
-    )
-    """)
-
     conn.commit()
     conn.close()
 
@@ -111,7 +102,7 @@ def login():
     init_db()
     error = None
     if request.method == "POST":
-        if request.form.get("username") == ADMIN_USER and request.form.get("password") == ADMIN_PASSWORD:
+        if request.form.get("username") == ADMIN_USER and password_ok(request.form.get("password", "")):
             session["logged_in"] = True
             session["client_id"] = DEFAULT_CLIENT_ID
             return redirect("/dashboard")
@@ -123,23 +114,12 @@ def logout():
     session.clear()
     return redirect("/login")
 
-@app.route("/clients")
-@login_required
-def clients():
-    return render_template("clients.html", clients=CLIENTS, active=current_client())
-
-@app.route("/switch-client/<client_id>")
-@login_required
-def switch_client(client_id):
-    if client_id in CLIENTS:
-        session["client_id"] = client_id
-    return redirect("/dashboard")
-
 @app.route("/lead", methods=["POST"])
 def create_lead():
     init_db()
     client = CLIENTS[DEFAULT_CLIENT_ID]
     d = request.form
+
     db_exec("""
     INSERT INTO leads
     (client_id, lead_name, phone, email, date, lead_source, keyword, city, jail, bond_amount,
@@ -166,15 +146,12 @@ def create_lead():
     ))
     return redirect("/thank-you")
 
-@app.route("/thank-you")
-def thank_you():
-    return render_template("thank_you.html", client=CLIENTS[DEFAULT_CLIENT_ID])
-
 @app.route("/track", methods=["POST"])
 def track_event():
     init_db()
     client = CLIENTS[DEFAULT_CLIENT_ID]
     d = request.get_json() or {}
+
     db_exec("""
     INSERT INTO events (client_id, event_name, event_date, page, source, city, device)
     VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -187,9 +164,14 @@ def track_event():
         d.get("city", ""),
         d.get("device", "")
     ))
+
     return jsonify({"ok": True})
 
-def metrics_for(client_id):
+@app.route("/thank-you")
+def thank_you():
+    return render_template("thank_you.html", client=CLIENTS[DEFAULT_CLIENT_ID])
+
+def local_metrics(client_id):
     leads = db_rows("SELECT * FROM leads WHERE client_id=? ORDER BY id DESC", (client_id,))
     event_counts = dict(db_rows("SELECT event_name, COUNT(*) FROM events WHERE client_id=? GROUP BY event_name", (client_id,)))
     sources = db_rows("SELECT lead_source, COUNT(*) FROM leads WHERE client_id=? GROUP BY lead_source ORDER BY COUNT(*) DESC", (client_id,))
@@ -205,11 +187,6 @@ def metrics_for(client_id):
 
     return leads, {
         "total_leads": total_leads,
-        "users": "Connect GA4 API",
-        "sessions": "Connect GA4 API",
-        "devices": "Connect GA4 API",
-        "traffic_sources": sources,
-        "cities": cities,
         "conversions": conversions,
         "phone_calls": event_counts.get("phone_call_click", 0),
         "texts": event_counts.get("text_message_click", 0),
@@ -225,15 +202,31 @@ def metrics_for(client_id):
         "conversion_rate": conversion_rate,
         "best_source": sources[0][0] if sources else "Not enough data",
         "worst_source": sources[-1][0] if sources else "Not enough data",
-        "best_city": cities[0][0] if cities else "Not enough data"
+        "best_city": cities[0][0] if cities else "Not enough data",
+        "lead_sources": sources,
+        "lead_cities": cities
     }
+
+def combined_metrics(client):
+    leads, local = local_metrics(client["client_id"])
+    ga4 = get_ga4_summary(client.get("ga4_property_id", ""))
+
+    local["users"] = ga4.get("users", "Not connected")
+    local["sessions"] = ga4.get("sessions", "Not connected")
+    local["traffic_sources"] = ga4.get("traffic_sources", [])
+    local["cities"] = ga4.get("cities", local.get("lead_cities", []))
+    local["devices"] = ga4.get("devices", [])
+    local["ga4_connected"] = ga4.get("connected", False)
+    local["ga4_message"] = ga4.get("message", "")
+
+    return leads, local
 
 @app.route("/dashboard")
 @login_required
 def dashboard():
     init_db()
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
+    leads, metrics = combined_metrics(client)
     return render_template("dashboard.html", client=client, leads=leads, metrics=metrics)
 
 @app.route("/crm")
@@ -241,7 +234,7 @@ def dashboard():
 def crm():
     init_db()
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
+    leads, metrics = combined_metrics(client)
     return render_template("crm.html", client=client, leads=leads, metrics=metrics, pipeline=PIPELINE)
 
 @app.route("/lead/<int:lead_id>/update", methods=["POST"])
@@ -265,23 +258,24 @@ def update_lead(lead_id):
 @login_required
 def ai():
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
+    leads, metrics = combined_metrics(client)
+
     recommendations = [
-        f"Best source right now: {metrics['best_source']}",
-        f"Best city right now: {metrics['best_city']}",
-        "Make phone and text buttons the most visible actions on mobile.",
-        "Build dedicated city landing pages for each target city.",
-        "Use Google Business Profile posts 3 times per week.",
+        f"GA4 Status: {metrics['ga4_message']}",
+        f"Best source: {metrics['best_source']}",
+        f"Best city: {metrics['best_city']}",
+        "Push call and text buttons above the fold.",
+        "Create location pages for each city target.",
         "Ask every closed client for a Google review.",
-        "Track calls and texts as primary conversion indicators."
+        "Use calls, texts, forms, and AI intake as primary lead KPIs."
     ]
 
     posts = {
-        "gbp": f"Need bail help fast? {client['business_name']} helps families take the next step quickly. Call {client['phone']}.",
-        "facebook": f"If someone you love needs bail help, speed and communication matter. {client['business_name']} is ready for calls and texts.",
-        "faq": "Q: What information should I have before calling a bail bondsman? A: Name, jail, city, charge if known, and bond amount if available.",
-        "blog": "What Families Should Do First After an Arrest in Hampton Roads",
-        "review_response": "Thank you for trusting us during a stressful time. We appreciate the opportunity to help."
+        "gbp": f"Need bail help fast? {client['business_name']} helps families move quickly. Call {client['phone']}.",
+        "facebook": f"When someone you love needs help, quick communication matters. {client['business_name']} is ready by call or text.",
+        "faq": "Q: What should I have ready before calling? A: Name, jail, city, bond amount, and the best callback number.",
+        "blog": "What to Do First After an Arrest in Hampton Roads",
+        "review_response": "Thank you for trusting us during a stressful situation. We appreciate the opportunity to help."
     }
 
     return render_template("ai.html", client=client, metrics=metrics, recommendations=recommendations, posts=posts)
@@ -290,15 +284,20 @@ def ai():
 @login_required
 def reports():
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
+    leads, metrics = combined_metrics(client)
     return render_template("reports.html", client=client, metrics=metrics)
+
+@app.route("/clients")
+@login_required
+def clients():
+    return render_template("clients.html", clients=CLIENTS, active=current_client())
 
 @app.route("/monthly-report")
 @login_required
 def monthly_report():
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
-    path = "doe_platform_v3_monthly_report.pdf"
+    leads, metrics = combined_metrics(client)
+    path = "doe_platform_v4_monthly_report.pdf"
 
     styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(path)
@@ -306,6 +305,9 @@ def monthly_report():
         Paragraph(f"{client['business_name']} Monthly DOE Report", styles["Title"]),
         Spacer(1, 12),
         Paragraph("Performance Summary", styles["Heading2"]),
+        Paragraph(f"GA4 Status: {metrics['ga4_message']}", styles["BodyText"]),
+        Paragraph(f"Users: {metrics['users']}", styles["BodyText"]),
+        Paragraph(f"Sessions: {metrics['sessions']}", styles["BodyText"]),
         Paragraph(f"Total Leads: {metrics['total_leads']}", styles["BodyText"]),
         Paragraph(f"Phone Calls: {metrics['phone_calls']}", styles["BodyText"]),
         Paragraph(f"Texts: {metrics['texts']}", styles["BodyText"]),
@@ -319,7 +321,7 @@ def monthly_report():
         Paragraph(f"Conversion Rate: {metrics['conversion_rate']}%", styles["BodyText"]),
         Spacer(1, 12),
         Paragraph("Recommendations", styles["Heading2"]),
-        Paragraph("Focus on calls, texts, bail forms, Google reviews, city pages, and Google Business Profile posting.", styles["BodyText"])
+        Paragraph("Focus on calls, texts, bail forms, Google reviews, Google Maps clicks, and city-based SEO pages.", styles["BodyText"])
     ]
     doc.build(story)
     return send_file(path, as_attachment=True)
@@ -328,7 +330,7 @@ def monthly_report():
 @login_required
 def api_metrics():
     client = current_client()
-    leads, metrics = metrics_for(client["client_id"])
+    leads, metrics = combined_metrics(client)
     return jsonify(metrics)
 
 if __name__ == "__main__":

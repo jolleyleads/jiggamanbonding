@@ -6,7 +6,7 @@
 </header>
 <section class="card">
 {% for key, c in clients.items() %}
-<p><strong>{{ c.business_name }}</strong> - {{ c.industry }} - <a href="/switch-client/{{ key }}">Open</a></p>
+<p><strong>{{ c.business_name }}</strong> - {{ c.industry }} - {{ c.dashboard_url }}</p>
 {% endfor %}
 </section>
 {% endblock %}

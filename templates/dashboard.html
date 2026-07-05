@@ -3,6 +3,9 @@
 <header class="hero small">
 <h1>Agency Dashboard</h1>
 <p>{{ client.business_name }} performance command center.</p>
+{% if not metrics.ga4_connected %}
+<p class="warning">{{ metrics.ga4_message }}</p>
+{% endif %}
 </header>
 
 <section class="grid">
@@ -33,6 +36,28 @@
 <section class="card">
 <h2>Tracked Actions</h2>
 <canvas id="chart"></canvas>
+</section>
+
+<section class="card">
+<h2>GA4 Traffic Sources</h2>
+<ul>
+{% for source, count in metrics.traffic_sources %}
+<li>{{ source }}: {{ count }}</li>
+{% else %}
+<li>No GA4 traffic source data yet.</li>
+{% endfor %}
+</ul>
+</section>
+
+<section class="card">
+<h2>GA4 Cities</h2>
+<ul>
+{% for city, count in metrics.cities %}
+<li>{{ city }}: {{ count }}</li>
+{% else %}
+<li>No GA4 city data yet.</li>
+{% endfor %}
+</ul>
 </section>
 
 <script>
