@@ -1,131 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{{ client.business_name }} | 24/7 Bail Bond Help</title>
+<!-- Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{ client.gtm_id }}');
+</script>
+<title>{{ client.business_name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/static/css/style.css">
 <script src="/static/js/tracking.js"></script>
 </head>
-<body class="public-page">
+<body>
+<div class="jb-logo-bar">
+  <img src="/static/img/jigga.jpeg" alt="Jiggaman Bonding Logo">
+</div>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ client.gtm_id }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<nav class="public-nav">
-  <div class="public-brand">
-    <img src="/static/img/jigga.jpeg" alt="Jiggaman Bonding Logo">
-    <div>
-      <strong>{{ client.business_name }}</strong>
-      <span>24/7 Bail Bond Help</span>
-    </div>
-  </div>
-  <div class="public-nav-actions">
-    <a href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call Now</a>
-    <a href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
-  </div>
-</nav>
+<header class="hero">
+<h1>{{ client.business_name }}</h1>
+<p>Fast bail bond help when timing matters.</p>
+<div class="actions">
+<a class="btn primary" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call {{ client.phone }}</a>
+<a class="btn" href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
+<a class="btn" href="mailto:{{ client.email }}" onclick="trackDOE('email_click')">Email</a>
+<a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Jiggaman+Bonding" onclick="trackDOE('maps_click')">Google Maps</a>
+</div>
+</header>
 
-<section class="public-hero">
-  <div class="hero-copy">
-    <div class="badge-row">
-      <span>Open 24/7</span>
-      <span>Fast Response</span>
-      <span>Hampton Roads</span>
-    </div>
-    <h1>Fast Bail Bond Help When Every Minute Matters</h1>
-    <p>Local bail bond help with clear next steps, quick communication, and support for families dealing with an arrest.</p>
-    <div class="hero-cta">
-      <a class="cta gold" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call {{ client.phone }}</a>
-      <a class="cta dark" href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
-    </div>
-  </div>
-  <div class="hero-card">
-    <img src="/static/img/jigga.jpeg" alt="Jiggaman Bonding Logo">
-    <h3>Need help now?</h3>
-    <p>Have the name, jail, city, and bond amount ready if possible.</p>
-  </div>
+<section class="card">
+<h2>Bail Help Form</h2>
+<form action="/lead" method="POST" onsubmit="trackDOE('bail_form_submit')">
+<input name="lead_name" placeholder="Your Name" required>
+<input name="phone" placeholder="Phone Number" required>
+<input name="email" placeholder="Email">
+<input name="city" placeholder="City">
+<input name="jail" placeholder="Jail">
+<input name="bond_amount" placeholder="Bond Amount">
+<input name="lead_source" value="Website Bail Form" hidden>
+<textarea name="notes" placeholder="What happened?"></textarea>
+<button type="submit">Request Bail Help</button>
+</form>
 </section>
 
-<section class="trust-grid">
-  <div><strong>24/7</strong><span>Availability</span></div>
-  <div><strong>Fast</strong><span>Call/Text Response</span></div>
-  <div><strong>Local</strong><span>Hampton Roads Help</span></div>
-  <div><strong>Private</strong><span>Confidential Support</span></div>
+<section class="card">
+<h2>AI Intake</h2>
+<form action="/lead" method="POST" onsubmit="trackDOE('ai_intake_submit')">
+<input name="lead_name" placeholder="Name" required>
+<input name="phone" placeholder="Phone Number" required>
+<input name="city" placeholder="City">
+<input name="lead_source" value="AI Intake" hidden>
+<button type="submit">Start AI Intake</button>
+</form>
 </section>
 
-<section class="premium-section">
-  <h2>Emergency Action Center</h2>
-  <p class="section-subtitle">Choose the fastest way to get help.</p>
-  <div class="action-cards">
-    <a href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call Now</a>
-    <a href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
-    <a href="#bail-form">Start Bail Form</a>
-    <a href="#" onclick="trackDOE('maps_click')">Open Maps</a>
-  </div>
+<section class="card">
+<h2>Quick Actions</h2>
+<a class="link-btn" href="#" onclick="trackDOE('jail_search_click')">Jail Search</a>
+<a class="link-btn" href="#" onclick="trackDOE('review_click')">Leave a Review</a>
+<a class="link-btn" href="#" onclick="trackDOE('live_chat_click')">Live Chat</a>
 </section>
 
-<section class="premium-section">
-  <h2>How It Works</h2>
-  <div class="steps-grid">
-    <div><span>1</span><h3>Call or Text</h3><p>Reach out immediately for fast communication.</p></div>
-    <div><span>2</span><h3>Share Details</h3><p>Name, jail, city, bond amount, and callback number.</p></div>
-    <div><span>3</span><h3>Get Next Steps</h3><p>We explain what information is needed and what happens next.</p></div>
-    <div><span>4</span><h3>Move Forward</h3><p>Begin the process as quickly and clearly as possible.</p></div>
-  </div>
-</section>
-
-<section class="premium-section">
-  <h2>Service Areas</h2>
-  <div class="service-areas">
-    <span>Portsmouth</span><span>Suffolk</span><span>Norfolk</span><span>Chesapeake</span><span>Virginia Beach</span><span>Hampton</span><span>Newport News</span>
-  </div>
-</section>
-
-<section class="premium-section">
-  <h2>Reviews & Trust</h2>
-  <div class="testimonial-grid">
-    <div><p>“Fast communication and clear direction when we needed help.”</p><strong>Local Family</strong></div>
-    <div><p>“Professional, responsive, and easy to reach.”</p><strong>Client Review</strong></div>
-    <div><p>“Helped explain what to do next during a stressful situation.”</p><strong>Hampton Roads Client</strong></div>
-  </div>
-</section>
-
-<section class="premium-section" id="bail-form">
-  <h2>Bail Help Form</h2>
-  <p class="section-subtitle">Submit your information and someone can follow up.</p>
-  <form class="elite-form" action="/lead" method="POST" onsubmit="trackDOE('bail_form_submit')">
-    <input name="lead_name" placeholder="Your Name" required>
-    <input name="phone" placeholder="Phone Number" required>
-    <input name="email" placeholder="Email">
-    <input name="city" placeholder="City">
-    <input name="jail" placeholder="Jail">
-    <input name="bond_amount" placeholder="Bond Amount">
-    <input name="lead_source" value="Website Bail Form" hidden>
-    <textarea name="notes" placeholder="Tell us what happened"></textarea>
-    <button type="submit">Request Bail Help</button>
-  </form>
-</section>
-
-<section class="premium-section">
-  <h2>FAQs</h2>
-  <div class="faq-list">
-    <h3>What information should I have ready?</h3>
-    <p>Name, jail, city, bond amount, and the best callback number.</p>
-    <h3>Can I text instead of calling?</h3>
-    <p>Yes. Texting is available for quick communication.</p>
-    <h3>How fast can the process start?</h3>
-    <p>The sooner you call or text, the sooner the next step can be explained.</p>
-  </div>
-</section>
-
-<section class="final-action">
-  <h2>Need bail help now?</h2>
-  <p>Call or text Jiggaman Bonding now.</p>
-  <a class="cta gold" href="tel:{{ client.phone_raw }}" onclick="trackDOE('phone_call_click')">Call {{ client.phone }}</a>
-  <a class="cta dark" href="sms:{{ client.phone_raw }}" onclick="trackDOE('text_message_click')">Text Now</a>
-</section>
-
-<footer class="public-footer">
-  <p>{{ client.business_name }} | {{ client.phone }} | {{ client.email }}</p>
-  <a href="/login">Agency Login</a>
-</footer>
-
+<footer><a href="/login">Agency Login</a></footer>
 </body>
 </html>
+
