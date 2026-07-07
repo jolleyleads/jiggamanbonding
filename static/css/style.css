@@ -1,1 +1,15 @@
 body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#172033}nav{background:#0f172a;padding:14px;text-align:center}nav a{color:white;text-decoration:none;margin:0 10px;font-weight:bold}.hero{background:#111827;color:white;padding:42px 20px;text-align:center}.hero.small{padding:24px 20px}.actions,.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:1180px;margin:20px auto}.btn,button,.link-btn{display:inline-block;padding:13px 18px;border-radius:8px;background:#d4a017;color:#111;text-decoration:none;font-weight:bold;border:0;cursor:pointer;margin:6px}.primary{background:#f0b429}.card,.metric,.login-card{background:white;padding:22px;margin:20px auto;max-width:1180px;border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,.08)}.login-card{max-width:420px;margin-top:80px}.metric{text-align:center;margin:0}.metric p{font-size:23px;font-weight:bold;word-break:break-word}input,textarea,select{display:block;width:95%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px;border-bottom:1px solid #ddd;text-align:left;vertical-align:top}ul{line-height:1.8}canvas{max-height:360px}.error{color:red;font-weight:bold}.warning{background:#fff3cd;color:#856404;padding:10px;border-radius:8px;display:inline-block}footer{text-align:center;padding:30px}
+.jb-logo-bar{
+  background:#020617;
+  text-align:center;
+  padding:22px;
+  border-bottom:5px solid #d4a017;
+}
+
+.jb-logo-bar img{
+  width:340px;
+  max-width:90%;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
