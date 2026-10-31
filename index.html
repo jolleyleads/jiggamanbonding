@@ -32,6 +32,17 @@ input,textarea,select{display:block;width:100%;padding:14px 16px;margin:10px 0;b
 .sticky{position:fixed;bottom:0;left:0;right:0;background:#07131cf5;padding:9px 14px;text-align:center;z-index:999;border-top:1px solid #46dce64b;backdrop-filter:blur(12px);display:flex;justify-content:center;gap:10px}.sticky .btn{margin:0;flex:0 1 230px}.footer{text-align:center;color:#97b2be;padding:20px 22px 30px;font-size:13px}
 @media(max-width:600px){.nav-inner{justify-content:center}.nav-links{justify-content:center;gap:10px 15px}.nav-links a{font-size:12px}header{padding:38px 18px 42px}.hero-title{font-size:clamp(35px,10vw,52px)}.hero-actions .btn{width:100%}.hero-meta{gap:6px 14px}.card{border-radius:17px}main{padding:18px 12px}.sticky .btn{padding:12px 10px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,button{transition:none}}
+
+/* Prominent arrest lookup feature */
+.arrest-feature{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:center;position:relative;overflow:hidden;border:1px solid #46dce680;background:radial-gradient(ellipse at top right,#46dce61c,transparent 65%),linear-gradient(135deg,#123542,#0b202c);box-shadow:0 18px 55px #0003}
+.arrest-feature h2{font-size:clamp(30px,4.5vw,48px);max-width:640px;margin-bottom:16px}
+.arrest-feature .lead{margin-bottom:20px}.arrest-feature .small{margin:18px 0 0}
+.arrest-actions{display:flex;flex-wrap:wrap;gap:12px}.arrest-actions .btn{min-height:52px}
+.arrest-help{padding:26px;border-radius:17px;border:1px solid #e8bd6445;background:#06151bb3}
+.arrest-help .lookup-symbol{display:inline-flex;width:46px;height:46px;align-items:center;justify-content:center;border-radius:13px;background:#e8bd641a;color:var(--gold);margin-bottom:16px}
+.arrest-help h3{font-size:23px}.arrest-help p{color:#c0d4de}.arrest-help .btn{width:100%}
+.nav-links a.arrest-nav{color:var(--teal)}
+@media(max-width:700px){.arrest-feature{grid-template-columns:minmax(0,1fr);gap:22px}.arrest-actions{flex-direction:column}.arrest-actions .btn{width:100%}.arrest-help{padding:22px}}
 </style>
 </head>
 <body>
@@ -40,8 +51,28 @@ input,textarea,select{display:block;width:100%;padding:14px 16px;margin:10px 0;b
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<nav class="site-nav" aria-label="Main navigation"><div class="nav-inner"><a class="wordmark" href="#top">JIGGAMAN BONDING</a><div class="nav-links"><a href="#services">Bail Bonds</a><a href="#lookup">Jail Lookup</a><a href="#intake">Get Help</a><a href="#areas">Service Areas</a><a href="#faq">FAQs</a><a href="tel:7576980355">Call 24/7</a></div></div></nav>
-<header id="top"><div class="hero-inner"><div class="logo-frame"><img src="logo.jpg" class="logo" alt="Jiggaman Bonding official business logo"></div><p class="eyebrow">Hampton Roads, Virginia • Bail Bond Assistance</p><h1 class="hero-title">Need a <span>Bail Bondsman</span> Right Now?</h1><p class="hero-copy">Jiggaman Bonding provides confidential, 24/7 bail bonds assistance for families in Suffolk, Portsmouth, Norfolk, Chesapeake, Virginia Beach and throughout Hampton Roads. Speak directly with John to discuss the next step.</p><div class="hero-actions"><a class="btn gold" href="tel:7576980355">Call John: 757-698-0355</a><a class="btn secondary" href="sms:7576980355">Text a Bail Bondsman</a><a class="btn secondary" href="#intake">Request Bail Help</a></div><div class="hero-meta"><span>✓ Available 24/7</span><span>✓ Confidential Support</span><span>✓ Local Hampton Roads Service</span></div></div></header><main>
+<nav class="site-nav" aria-label="Main navigation"><div class="nav-inner"><a class="wordmark" href="#top">JIGGAMAN BONDING</a><div class="nav-links"><a href="#services">Bail Bonds</a><a class="arrest-nav" href="#recent-arrests">Recent Arrests</a><a href="#lookup">Jail Lookup</a><a href="#intake">Get Help</a><a href="#areas">Service Areas</a><a href="#faq">FAQs</a><a href="tel:7576980355">Call 24/7</a></div></div></nav>
+<header id="top"><div class="hero-inner"><div class="logo-frame"><img src="logo.jpg" class="logo" alt="Jiggaman Bonding official business logo"></div><p class="eyebrow">Hampton Roads, Virginia • Bail Bond Assistance</p><h1 class="hero-title">Need a <span>Bail Bondsman</span> Right Now?</h1><p class="hero-copy">Jiggaman Bonding provides confidential, 24/7 bail bonds assistance for families in Suffolk, Portsmouth, Norfolk, Chesapeake, Virginia Beach and throughout Hampton Roads. Speak directly with John to discuss the next step.</p><div class="hero-actions"><a class="btn gold" href="tel:7576980355">Call John: 757-698-0355</a><a class="btn secondary" href="sms:7576980355">Text a Bail Bondsman</a><a class="btn secondary" href="#intake">Request Bail Help</a><a class="btn secondary" href="#recent-arrests">See Recent Arrests</a></div><div class="hero-meta"><span>✓ Available 24/7</span><span>✓ Confidential Support</span><span>✓ Local Hampton Roads Service</span></div></div></header><main>
+
+<section class="card arrest-feature" id="recent-arrests" aria-labelledby="arrest-title">
+<div>
+<p class="step-label">Hampton Roads • Arrest &amp; Jail Lookup</p>
+<h2 id="arrest-title">See Who’s Been Arrested</h2>
+<p class="lead">Looking for a friend or family member? Browse recent Virginia arrest records on Arrests.org, or check local jail sources for custody information.</p>
+<div class="arrest-actions">
+<a class="btn" href="https://virginia.arrests.org/" target="_blank" rel="noopener noreferrer">See Recent Local Arrests <span aria-hidden="true">↗</span></a>
+<a class="btn secondary" href="#lookup">Check Jail Sources</a>
+</div>
+<p class="small">Arrests.org opens in a new tab. Arrest records do not confirm current custody; verify release or detention directly with the jail.</p>
+</div>
+<aside class="arrest-help" aria-label="Bail bond assistance">
+<span class="lookup-symbol" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></span>
+<h3>Found Someone Who Needs Bail?</h3>
+<p>Have their name and jail location ready. Call John to discuss bail bond assistance in Hampton Roads.</p>
+<a class="btn gold" href="tel:7576980355">Need a Bondsman? Call John</a>
+</aside>
+</section>
+
 
 <section class="card" id="services"><p class="step-label">Bail Bonds Services</p><h2>Need a Bond Fast?</h2>
 <p>Jiggaman Bonding helps families with emergency bail bonds, misdemeanor bonds, felony bonds, traffic bonds, warrant assistance, and jail release information across Hampton Roads. Whether you are searching for a Suffolk bail bondsman, a Portsmouth bail bondsman, a Norfolk bail bond agent, or 24-hour bail bond assistance in Chesapeake, our team can help you understand the process.</p>
